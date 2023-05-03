@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_journal_form_view_stratego_inherit" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='restrict_mode_hash_table']" position="after">
+                <field name="access_stratego" widget="radio"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="open_account_journal_dashboard_kanban_project" model="ir.actions.act_window">
+        <field name="name">Tablero contable</field>
+        <field name="res_model">account.journal</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="usage">menu</field>
+        <field name="context">{'search_default_dashboard':1}</field>
+        <field name="domain">[('access_stratego','=','project')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_neutral_face">
+                This is the accounting dashboard
+            </p>
+            <p>
+                If you have not installed a chart of account, please install one first.
+                <br/>
+                <a type="action" name="%(account.open_account_charts_modules)d" tabindex="-1">Browse available countries.</a>
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_board_journal_2" name="Tablero" action="open_account_journal_dashboard_kanban_project" groups="l10n_cr_stratego.group_journal_project"
+              sequence="1" parent="l10n_cr_stratego.menu_finance_supplier_stratego"/>
+
+    <record id="open_account_journal_dashboard_kanban_admin" model="ir.actions.act_window">
+        <field name="name">Tablero contable</field>
+        <field name="res_model">account.journal</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="usage">menu</field>
+        <field name="context">{'search_default_dashboard':1}</field>
+        <field name="domain">[('access_stratego','=','admin')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_neutral_face">
+                This is the accounting dashboard
+            </p>
+            <p>
+                If you have not installed a chart of account, please install one first.
+                <br/>
+                <a type="action" name="%(account.open_account_charts_modules)d" tabindex="-1">Browse available countries.</a>
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_board_journal_3" name="Tablero" action="open_account_journal_dashboard_kanban_admin" groups="l10n_cr_stratego.group_journal_admin"
+              sequence="1" parent="l10n_cr_stratego.menu_finance_supplier_stratego"/>
+</odoo>
