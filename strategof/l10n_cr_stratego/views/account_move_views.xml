@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_move_stratego_einvoice_form_inherit" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="l10n_cr_accounting.account_move_form_view_inherit_fecr_account"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tipo_documento']" position="replace"/>
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="tipo_documento"/> <!-- Nuevo -->
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_form_inherit" model="ir.ui.view">
+            <field name="name">account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+<!--                    <field name="tipo_documento"/> &lt;!&ndash; Nuevo &ndash;&gt;-->
+                    <field name="proyecto_id" attrs="{'invisible': ['|',('move_type','not in', ('out_invoice','out_refund')),('invoice_origin','=',False)]}" readonly="1"/>
+                    <field name="cuenta_analitica_id" attrs="{'invisible': ['|',('move_type','not in', ('out_invoice','out_refund')),('invoice_origin','=',False)]}" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Todo: Vista para facturas por cobrar-->
+        <record id="action_move_out_invoice_type_receivable" model="ir.actions.act_window">
+            <field name="name">Facturas por cobrar</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="account.view_out_invoice_tree"/>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="domain">[('move_type', '=', 'out_invoice'),('state','=','posted'),('payment_state', '!=', 'paid')]</field>
+            <field name="context">{'default_move_type': 'out_invoice'}</field>
+            <field name="help" type="html">
+                <p>Facturas por cobrar</p>
+            </field>
+        </record>
+
+        <!--Todo: Vista para facturas por validar-->
+        <record id="action_move_out_invoice_type_validate" model="ir.actions.act_window">
+            <field name="name">Facturas por validar</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="account.view_out_invoice_tree"/>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="domain">[('move_type', '=', 'out_invoice'),('state','=','draft')]</field>
+            <field name="context">{'default_move_type': 'out_invoice'}</field>
+            <field name="help" type="html">
+                <p>Facturas por validar</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_move_out_invoice_type_receivable" action="action_move_out_invoice_type_receivable" sequence="5" parent="account.menu_finance_receivables"/>
+        <menuitem id="menu_action_move_out_invoice_type_validate" action="action_move_out_invoice_type_validate" sequence="6" parent="account.menu_finance_receivables"/>
+
+    </data>
+</odoo>

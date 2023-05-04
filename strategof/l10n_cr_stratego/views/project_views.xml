@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Todo: Agregando modo tree en vista principal del proyecto-->
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="project.view_project"/>
+    </record>
+
+
+    <!--Todo: Tareas en proyecto-->
+    <record id="view_task_tree2_inherit_stratego" model="ir.ui.view">
+        <field name="name">project.task.tree.inherit.stratego</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stage_id']" position="before">
+                <field name="sol_description" invisible="1"/>
+                <field name="sol_qty" invisible="1"/>
+                <field name="sol_price_cost" invisible="1"/>
+                <field name="sol_total" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_form2_inherit_stratego" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.stratego</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="details_tasl" string="Detalles del proyecto">
+                    <group>
+                        <field name="sol_product_id" readonly="1" string="Producto"/>
+                        <field name="sol_description" readonly="1"/>
+                        <field name="sol_price_cost" readonly="1"/>
+                        <field name="sol_qty" readonly="1"/>
+                        <field name="sol_pax_days_hours" readonly="1"/>
+                        <field name="sol_new_qty" readonly="1"/>
+                        <field name="sol_total" readonly="1"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+
+    <!--Todo: Form en proyecto-->
+    <record id="edit_project_inherit_stratego" model="ir.ui.view">
+        <field name="name">project.project.inherit.stratego</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="datails_stratego" string="Datos proyecto general" attrs="{'invisible': [('task_ids','=', False)]}">
+                    <field name="task_ids"  mode="tree">
+                        <tree create="false" default_order="id desc">
+                            <field name="sol_description"/>
+                            <field name="user_id"/>
+                            <field name="sol_qty" sum="Total cantidad"/>
+                            <field name="sol_price_cost" sum="Total precio" invisible="1"/>
+                            <field name="sol_total" sum="TOTAL COSTO PROYECTO"/>
+                            <field name="stage_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="note"/>
+            </xpath>
+        </field>
+    </record>
+    <!--Todo: Tree en proyecto-->
+    <record id="view_project_tree_inherit_stratego" model="ir.ui.view">
+        <field name="name">project.project.tree.inherit.stratego</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='sequence']" position="after">
+                <field name="create_date" string="Fecha creación"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>
+

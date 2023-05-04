@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <menuitem id="menu_finance_payables_stratego" name="Proveedores" sequence="998" parent="account.menu_finance"
+              groups="l10n_cr_stratego.group_access_supplier">
+        <menuitem id="menu_in_invoice_type_payables_stratego" name="Facturas" action="account.action_move_in_invoice_type"/>
+        <menuitem id="menu_in_refund_type_payables_stratego" name="Rectificativas" action="account.action_move_in_refund_type"/>
+        <menuitem id="menu_payments_payable_payables_stratego" name="Pagos" action="account.action_account_payments_payable"/>
+        <menuitem id="menu_account_supplier_payables_stratego" name="Proveedores" action="account.res_partner_action_supplier"/>
+    </menuitem>
+
+    <menuitem id="menu_finance_payables_stratego" name="Proveedores" sequence="999" parent="account.menu_finance"
+              groups="l10n_cr_stratego.group_access_supplier_paids">
+        <menuitem id="menu_in_invoice_type_payables_stratego" name="Facturas" action="account.action_move_in_invoice_type"/>
+        <menuitem id="menu_in_refund_type_payables_stratego" name="Rectificativas" action="account.action_move_in_refund_type"/>
+        <menuitem id="menu_payments_payable_payables_stratego" name="Pagos" action="account.action_account_payments_payable"/>
+        <menuitem id="menu_account_supplier_payables_stratego" name="Proveedores" action="account.res_partner_action_supplier"/>
+    </menuitem>
+
+</odoo>
